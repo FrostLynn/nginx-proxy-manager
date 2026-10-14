@@ -16,7 +16,7 @@ import {
 	SSLCertificateField,
 	SSLOptionsFields,
 } from "src/components";
-import { useProxyHost, useSetProxyHost, useUser } from "src/hooks";
+import { useProxyHost, useSetProxyHost, useSetting, useUser } from "src/hooks";
 import { T } from "src/locale";
 import { MANAGE, PROXY_HOSTS } from "src/modules/Permissions";
 import { validateNumber, validateString } from "src/modules/Validations";
@@ -32,6 +32,7 @@ interface Props extends InnerModalProps {
 const ProxyHostModal = EasyModal.create(({ id, visible, remove }: Props) => {
 	const { data: currentUser, isLoading: userIsLoading, error: userError } = useUser("me");
 	const { data, isLoading, error } = useProxyHost(id);
+	const { data: defaultForwardHostnameSetting } = useSetting("default-forward-hostname", { enabled: id === "new" });
 	const { mutate: setProxyHost } = useSetProxyHost();
 	const [errorMsg, setErrorMsg] = useState<ReactNode | null>(null);
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -74,7 +75,7 @@ const ProxyHostModal = EasyModal.create(({ id, visible, remove }: Props) => {
 							// Details tab
 							domainNames: data?.domainNames || [],
 							forwardScheme: data?.forwardScheme || "http",
-							forwardHost: data?.forwardHost || "",
+							forwardHost: data?.forwardHost || (id === "new" ? defaultForwardHostnameSetting?.value || "" : ""),
 							forwardPort: data?.forwardPort || undefined,
 							accessListId: data?.accessListId || 0,
 							cachingEnabled: data?.cachingEnabled || false,

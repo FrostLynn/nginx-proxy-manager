@@ -89,6 +89,26 @@ const setupDefaultSettings = async () => {
 };
 
 /**
+ * Creates the default-forward-hostname setting if it doesn't already exist
+ *
+ * @returns {Promise}
+ */
+const setupDefaultForwardHostname = async () => {
+	const row = await settingModel.query().select("id").where({ id: "default-forward-hostname" }).first();
+
+	if (!row?.id) {
+		await settingModel.query().insert({
+			id: "default-forward-hostname",
+			name: "Default Forward Hostname",
+			description: "Default hostname pre-filled when creating a new Proxy Host",
+			value: "",
+			meta: {},
+		});
+		logger.info("Default forward hostname setting added");
+	}
+};
+
+/**
  * Installs all Certbot plugins which are required for an installed certificate
  *
  * @returns {Promise}
@@ -149,4 +169,4 @@ const setupLogrotation = () => {
 	return runLogrotate();
 };
 
-export default () => setupDefaultUser().then(setupDefaultSettings).then(setupCertbotPlugins).then(setupLogrotation);
+export default () => setupDefaultUser().then(setupDefaultSettings).then(setupDefaultForwardHostname).then(setupCertbotPlugins).then(setupLogrotation);

@@ -1,9 +1,15 @@
+import { useState } from "react";
 import { T } from "src/locale";
+import DefaultForwardHostname from "./DefaultForwardHostname";
 import DefaultSite from "./DefaultSite";
+
+type SettingTab = "default-site" | "default-forward-hostname";
 
 export default function Layout() {
 	// Taken from https://preview.tabler.io/settings.html
 	// Refer to that when updating this content
+
+	const [activeTab, setActiveTab] = useState<SettingTab>("default-site");
 
 	return (
 		<div className="card mt-4">
@@ -22,16 +28,30 @@ export default function Layout() {
 							<div className="list-group list-group-transparent">
 								<a
 									href="#"
-									className="list-group-item list-group-item-action d-flex align-items-center active"
-									onClick={(e) => e.preventDefault()}
+									className={`list-group-item list-group-item-action d-flex align-items-center ${activeTab === "default-site" ? "active" : ""}`}
+									onClick={(e) => {
+										e.preventDefault();
+										setActiveTab("default-site");
+									}}
 								>
 									<T id="settings.default-site" />
+								</a>
+								<a
+									href="#"
+									className={`list-group-item list-group-item-action d-flex align-items-center ${activeTab === "default-forward-hostname" ? "active" : ""}`}
+									onClick={(e) => {
+										e.preventDefault();
+										setActiveTab("default-forward-hostname");
+									}}
+								>
+									<T id="settings.default-forward-hostname" />
 								</a>
 							</div>
 						</div>
 					</div>
 					<div className="col-12 col-md-9 d-flex flex-column">
-						<DefaultSite />
+						{activeTab === "default-site" && <DefaultSite />}
+						{activeTab === "default-forward-hostname" && <DefaultForwardHostname />}
 					</div>
 				</div>
 			</div>

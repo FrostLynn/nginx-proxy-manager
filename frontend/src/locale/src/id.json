@@ -590,6 +590,15 @@
 	"settings.default-site.redirect": {
 		"defaultMessage": "Alihkan"
 	},
+	"settings.default-forward-hostname": {
+		"defaultMessage": "Hostname Forward Default"
+	},
+	"settings.default-forward-hostname.label": {
+		"defaultMessage": "Hostname Forward Default"
+	},
+	"settings.default-forward-hostname.hint": {
+		"defaultMessage": "Hostname ini akan otomatis terisi di kolom Forward Hostname saat membuat Proxy Host baru. Kosongkan untuk menonaktifkan."
+	},
 	"setup.preamble": {
 		"defaultMessage": "Mulai dengan membuat akun admin Anda."
 	},

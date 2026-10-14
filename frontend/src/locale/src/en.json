@@ -746,6 +746,15 @@
 	"settings.default-site.redirect": {
 		"defaultMessage": "Redirect"
 	},
+	"settings.default-forward-hostname": {
+		"defaultMessage": "Default Forward Hostname"
+	},
+	"settings.default-forward-hostname.label": {
+		"defaultMessage": "Default Forward Hostname"
+	},
+	"settings.default-forward-hostname.hint": {
+		"defaultMessage": "This hostname will be pre-filled in the Forward Hostname field when creating a new Proxy Host. Leave empty to disable."
+	},
 	"setup.preamble": {
 		"defaultMessage": "Get started by creating your admin account."
 	},
