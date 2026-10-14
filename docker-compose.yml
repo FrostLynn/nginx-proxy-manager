@@ -1,0 +1,24 @@
+# =====================================================================
+# Nginx Proxy Manager — Production Deploy
+# Ganti IMAGE_TAG sesuai tag dari GitHub Actions (lihat Actions tab)
+# =====================================================================
+
+services:
+  app:
+    image: ghcr.io/frostlynn/nginx-proxy-manager:feat-default-forward-hostname
+    container_name: npm
+    restart: unless-stopped
+    ports:
+      - "80:80"       # HTTP — jangan diubah
+      - "81:81"       # Admin panel
+      - "443:443"     # HTTPS — jangan diubah
+    environment:
+      TZ: "Asia/Jakarta"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    healthcheck:
+      test: ["CMD", "/usr/bin/check-health"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
